@@ -22,7 +22,7 @@ def escapeshellarg(s: str)->str:
         raise ValueError("String contains null bytes, it is impossible to escape null bytes in bash!");
     return "'" + s.replace("'", "'\\''") + "'"
 
-def array_push(array: list|dict, *args: str)->int:
+def array_push(array: list|dict, *args: any)->int:
     # todo this can be optimized to only check the type of array once.
     for arg in args:
         if isinstance(array, list):
