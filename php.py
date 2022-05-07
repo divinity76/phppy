@@ -35,13 +35,13 @@ def array_push(array: list | dict, *args: any) -> int:
     elif isinstance(array, dict):
         # wouldn't surprise me if there's a significantly faster way to do this,
         # but this the first solution I could think of that worked
-        key = 0
+        key = -1
         # i tried using key = max(array.keys()), but that breaks if the dict has string keys..
         for existingkey in array.keys():
             if isinstance(existingkey, int) and existingkey > key:
-                key = existingkey;
+                key = existingkey
         for arg in args:
-            #loop should not be needed because we already started with the highest key?
+            # loop should not be needed because we already started with the highest key?
             # while key in array:
             key += 1
             array[key] = arg
@@ -49,3 +49,4 @@ def array_push(array: list | dict, *args: any) -> int:
     else:
         raise TypeError(
             "array_push() expects a list or dict as first argument, got " + str(type(array)))
+
