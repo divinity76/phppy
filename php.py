@@ -21,3 +21,14 @@ def escapeshellarg(s: str)->str:
     if s.find("\x00") != -1:
         raise ValueError("String contains null bytes, it is impossible to escape null bytes in bash!");
     return "'" + s.replace("'", "'\\''") + "'"
+
+def array_push(array: list|dict, *args: str)->int:
+    # todo this can be optimized to only check the type of array once.
+    for arg in args:
+        if isinstance(array, list):
+            array.append(arg);
+        elif isinstance(array, dict):
+            array[len(array)] = arg;
+        else:
+            raise TypeError("array_push() only works on lists and dicts!");
+    return len(array);
