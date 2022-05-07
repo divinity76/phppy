@@ -1,9 +1,11 @@
 from __future__ import annotations
+import sys
 
 
 def echo(*args: str)->None:
     for arg in args:
-        print(arg);
+        sys.stdout.buffer.write(arg.encode("raw_unicode_escape"));
+
 
 
 def strpos(haystack: int, needle: str, offset: int = 0)-> int|None:
