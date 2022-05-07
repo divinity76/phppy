@@ -28,9 +28,7 @@ def escapeshellarg(s: str) -> str:
 
 def array_push(array: list | dict, *args: any) -> int:
     if isinstance(array, list):
-        for arg in args:
-            # i wonder why list.append() doesn't take *args
-            array.append(arg)
+        array.extend(args)
         return len(array)
     elif isinstance(array, dict):
         # wouldn't surprise me if there's a significantly faster way to do this,
@@ -49,4 +47,3 @@ def array_push(array: list | dict, *args: any) -> int:
     else:
         raise TypeError(
             "array_push() expects a list or dict as first argument, got " + str(type(array)))
-
