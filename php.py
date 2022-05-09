@@ -12,7 +12,7 @@ def echo(*args: str | bytes | int | float) -> None:
             sys.stdout.buffer.write(str(arg).encode("ascii"))
         else:
             raise TypeError(
-                "echo() only accepts str and bytes arguments, got " + str(type(arg)))
+                "echo() only accepts str, bytes, int, and float arguments, got " + str(type(arg)))
     # sys.stdout.flush();
 
 
