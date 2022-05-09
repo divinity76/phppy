@@ -2,16 +2,19 @@ from __future__ import annotations
 import sys
 
 
-def echo(*args: str | bytes) -> None:
+def echo(*args: str | bytes | int | float) -> None:
     for arg in args:
-        if isinstance(arg, str):
-            sys.stdout.buffer.write(arg.encode("raw_unicode_escape"))
-        elif isinstance(arg, bytes):
+        if isinstance(arg, bytes):
             sys.stdout.buffer.write(arg)
+        elif isinstance(arg, str):
+            sys.stdout.buffer.write(arg.encode("raw_unicode_escape"))
+        elif isinstance(arg, (int, float)):
+            sys.stdout.buffer.write(str(arg).encode("ascii"))
         else:
             raise TypeError(
                 "echo() only accepts str and bytes arguments, got " + str(type(arg)))
     # sys.stdout.flush();
+
 
 
 def strpos(haystack: int, needle: str, offset: int = 0) -> int | None:
