@@ -2,9 +2,15 @@ from __future__ import annotations
 import sys
 
 
-def echo(*args: str) -> None:
+def echo(*args: str | bytes) -> None:
     for arg in args:
-        sys.stdout.buffer.write(arg.encode("raw_unicode_escape"))
+        if isinstance(arg, str):
+            sys.stdout.buffer.write(arg.encode("raw_unicode_escape"))
+        elif isinstance(arg, bytes):
+            sys.stdout.buffer.write(arg)
+        else:
+            raise TypeError(
+                "echo() only accepts str and bytes arguments, got " + str(type(arg)))
     # sys.stdout.flush();
 
 
