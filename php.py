@@ -1,6 +1,12 @@
 from __future__ import annotations
 import sys
+import inspect
 
+def __LINE__() -> int:
+    return inspect.currentframe().f_back.f_lineno
+
+def __FILE__() -> str:
+    return inspect.currentframe().f_back.f_code.co_filename
 
 def echo(*args: str | bytes | int | float) -> None:
     for arg in args:
