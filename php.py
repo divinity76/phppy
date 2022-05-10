@@ -1,12 +1,16 @@
 from __future__ import annotations
 import sys
 import inspect
+import time
+
 
 def __LINE__() -> int:
     return inspect.currentframe().f_back.f_lineno
 
+
 def __FILE__() -> str:
     return inspect.currentframe().f_back.f_code.co_filename
+
 
 def echo(*args: str | bytes | int | float) -> None:
     for arg in args:
@@ -20,7 +24,6 @@ def echo(*args: str | bytes | int | float) -> None:
             raise TypeError(
                 "echo() only accepts str, bytes, int, and float arguments, got " + str(type(arg)))
     # sys.stdout.flush();
-
 
 
 def strpos(haystack: int, needle: str, offset: int = 0) -> int | None:
@@ -62,3 +65,7 @@ def array_push(array: list | dict, *args: any) -> int:
     else:
         raise TypeError(
             "array_push() expects a list or dict as first argument, got " + str(type(array)))
+
+
+def sleep(seconds: float | int) -> None:
+    time.sleep(seconds)
