@@ -1,15 +1,18 @@
 from __future__ import annotations
+import typing
 import sys
 import inspect
 import time
-
-
-def __LINE__() -> int:
-    return inspect.currentframe().f_back.f_lineno
-
+# from var_dump import var_dump
 
 def __FILE__() -> str:
+    # ptyhon has a native __file__ 
     return inspect.currentframe().f_back.f_code.co_filename
+
+def __LINE__() -> int:
+    # python has no native __line__, the closest thing I could find was: sys._getframe().f_lineno
+    return inspect.currentframe().f_back.f_lineno
+
 
 
 def echo(*args: str | bytes | int | float) -> None:
@@ -23,10 +26,10 @@ def echo(*args: str | bytes | int | float) -> None:
         else:
             raise TypeError(
                 "echo() only accepts str, bytes, int, and float arguments, got " + str(type(arg)))
-    # sys.stdout.flush();
+    sys.stdout.flush();
 
 
-def strpos(haystack: int, needle: str, offset: int = 0) -> int | None:
+def strpos(haystack: str, needle: str, offset: int = 0) -> int | None:
     # cheat sheet: https://stackoverflow.com/a/17143335/1067003
     pos = haystack.find(needle, offset)
     if pos == -1:
@@ -69,3 +72,20 @@ def array_push(array: list | dict, *args: any) -> int:
 
 def sleep(seconds: float | int) -> None:
     time.sleep(seconds)
+
+
+def exit(status: int | str | None = None) -> typing.NoReturn:
+    if status is None:
+        sys.exit(0)
+    elif isinstance(status, str):
+        echo(status)
+        sys.exit(0)
+    elif isinstance(status, int):
+        sys.exit(status)
+    else:
+        raise TypeError(
+            "exit() expects an int | str | None as argument, got " + str(type(status)))
+
+# just an alias for exit
+def die(status: int | str | None = None) -> typing.NoReturn:
+    exit(status)
