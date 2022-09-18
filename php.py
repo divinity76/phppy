@@ -89,3 +89,23 @@ def exit(status: int | str | None = None) -> typing.NoReturn:
 # just an alias for exit
 def die(status: int | str | None = None) -> typing.NoReturn:
     exit(status)
+
+def file_get_contents(filename: str, ignored1_use_include_path: None = None, ignored2_context: None = None, offset: int = 0, length: int | None = None) -> str | bytes:
+    # with() automatically closes the file. open() throws if it cannot open.
+    with open(filename, 'rb') as f:
+        ret = ""
+        if offset != 0:
+            f.seek(offset)
+        if length is None:
+            ret = f.read()
+        else:
+            ret = f.read(length)
+        try:
+            return ret.decode("utf-8", errors = "strict")
+        except UnicodeDecodeError:
+            try:
+                return ret.decode("raw_unicode_escape", errors = "strict")
+            except UnicodeDecodeError:
+                # possibly unreachable?
+                # binary file
+                return ret
