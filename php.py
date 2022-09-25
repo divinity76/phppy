@@ -3,6 +3,7 @@ import typing
 import sys
 import inspect
 import time
+import math
 # from var_dump import var_dump
 
 def __FILE__() -> str:
@@ -73,6 +74,11 @@ def array_push(array: list | dict, *args: any) -> int:
 def sleep(seconds: float | int) -> None:
     time.sleep(seconds)
 
+def microtime(get_as_float: bool = False) -> float | str:
+    if get_as_float:
+        return time.time()
+    else:
+        return '%f %d' % math.modf(time.time())
 
 def exit(status: int | str | None = None) -> typing.NoReturn:
     if status is None:
