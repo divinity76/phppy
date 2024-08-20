@@ -115,3 +115,10 @@ def file_get_contents(filename: str, ignored1_use_include_path: None = None, ign
                 # possibly unreachable?
                 # binary file
                 return ret
+
+def bin2hex(string: str|bytes|bytearray) -> str:
+    if isinstance(string, str):        
+        return string.encode("utf-8").hex()
+    if isinstance(string, (bytes, bytearray)):
+        return string.hex()
+    raise ValueError("bin2hex: string must be str, bytes or bytearray")
